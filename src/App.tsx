@@ -56,15 +56,9 @@ export default function App() {
     };
   }, [downloadUrl]);
 
-  const canMerge = useMemo(
-    () => oddFile && evenFile && !busy,
-    [oddFile, evenFile, busy],
-  );
+  const canMerge = useMemo(() => oddFile && evenFile && !busy, [oddFile, evenFile, busy]);
 
-  const inspectPdf = async (
-    file: File,
-    setInfo: React.Dispatch<React.SetStateAction<PdfInfo>>,
-  ) => {
+  const inspectPdf = async (file: File, setInfo: React.Dispatch<React.SetStateAction<PdfInfo>>) => {
     if (!file) return;
     const bytes = await readArrayBuffer(file);
     const pdf = await PDFDocument.load(bytes);
@@ -75,9 +69,7 @@ export default function App() {
     });
   };
 
-  const handleOddChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleOddChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
     setOddFile(file);
     setDownloadUrl("");
@@ -96,9 +88,7 @@ export default function App() {
     }
   };
 
-  const handleEvenChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleEvenChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0] ?? null;
     setEvenFile(file);
     setDownloadUrl("");
@@ -176,36 +166,22 @@ export default function App() {
       <header className="hero">
         <p className="kicker">Client-only PDF tool</p>
         <h1>PDF Interleave</h1>
-        <p className="sub">
-          2つのPDFを読み込んで、奇数ページ/偶数ページとして交互に結合します。
-        </p>
+        <p className="sub">2つのPDFを読み込んで、奇数ページ/偶数ページとして交互に結合します。</p>
       </header>
 
       <section className="panel">
         <div className="field">
           <label htmlFor="oddPdf">PDF A（奇数ページ）</label>
-          <input
-            id="oddPdf"
-            type="file"
-            accept="application/pdf"
-            onChange={handleOddChange}
-          />
+          <input id="oddPdf" type="file" accept="application/pdf" onChange={handleOddChange} />
           <div className="meta">
-            {oddInfo.name} ・ {oddInfo.pages}ページ ・{" "}
-            {formatBytes(oddInfo.size)}
+            {oddInfo.name} ・ {oddInfo.pages}ページ ・ {formatBytes(oddInfo.size)}
           </div>
         </div>
         <div className="field">
           <label htmlFor="evenPdf">PDF B（偶数ページ）</label>
-          <input
-            id="evenPdf"
-            type="file"
-            accept="application/pdf"
-            onChange={handleEvenChange}
-          />
+          <input id="evenPdf" type="file" accept="application/pdf" onChange={handleEvenChange} />
           <div className="meta">
-            {evenInfo.name} ・ {evenInfo.pages}ページ ・{" "}
-            {formatBytes(evenInfo.size)}
+            {evenInfo.name} ・ {evenInfo.pages}ページ ・ {formatBytes(evenInfo.size)}
           </div>
         </div>
 
